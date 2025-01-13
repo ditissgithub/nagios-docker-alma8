@@ -14,8 +14,13 @@ COPY ./supervisord.conf /etc/supervisord.conf
 
 
 ADD ./entrypoint.sh /entrypoint.sh
+
 RUN chmod +x /entrypoint.sh && \
     chmod +x /etc/init.d/httpd && \
+    mkdir -p /run/php-fpm/ && \
+    chown -R root:root /run/php-fpm/ && \
+    mkdir /etc/nagios/conf.d
+    
 
 
 EXPOSE 9001 5666 5667 5668
