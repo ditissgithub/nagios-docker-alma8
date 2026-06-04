@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  nagios:
+    image: cdac_nagios:alma8  # Replace with your image name and tag
+    container_name: nagios
+    environment:
+      - PORT=${PORT}
+      - ROOT_PASSWD=${ROOT_PASSWD}
+      - NAGIOS_USER=${NAGIOS_USER}
+      - NAGIOS_USER_PASSWD=${NAGIOS_USER_PASSWD}
+      - Master_IP=${Master_IP}
+      - Host_IP=${Host_IP}
+      - compute_g_name=${compute_g_name}
+      - hm_g_name=${hm_g_name}
+      - gpu_g_name=${gpu_g_name}
+      - master_g_name=${master_g_name}
+      - login_g_name=${login_g_name}
+      - management_g_name=${management_g_name}
+    volumes:
+      - /hpctool_stack/nagios/nagiosdata:/nagiosdata
+    network_mode: host  # Uses the host's networking stack
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
